@@ -1,0 +1,35 @@
+		.login {
+			margin: 60px auto 105px;
+			height: 460px;
+			width: 720px;
+			border: 1px solid #eaeaea;
+			background-color: #f2f2f2;
+		}
+
+		.commonform {
+			width: 240px;
+			height: 50px;
+			margin: 30px auto;
+		}
+
+		input[type=text],
+		input[type=password] {
+			width: 100%;
+			padding: 12px 20px;
+			margin: 10px 0;
+			display: inline-block;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			box-sizing: border-box;
+		}
+
+		.loginbtn {
+			margin-top: 15px;
+			background-color: #009999;
+			padding: 10px;
+			color: #fff;
+			border: none;
+			width: 100%;
+			border-radius: 4px;
+			cursor: pointer;
+		}

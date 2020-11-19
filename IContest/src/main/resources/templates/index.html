@@ -1,0 +1,122 @@
+
+<!--  Created by IntelliJ IDEA.-->
+<!--  User: 天气晴-->
+<!--  Date: 2020/11/6-->
+<!--  Time: 15:13-->
+<!--  To change this template use File | Settings | File Templates.-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>IContest</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入 Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        nav .btn {
+            margin: 7px 5px;
+            float: right;
+        }
+
+        .row {
+            margin: 10px 0;
+        }
+
+        .footer {
+            background-color: black;
+            height: 100px;
+            color: white;
+        }
+
+        .item img{
+            max-height: 100%;
+            max-width: 100%;
+            display: block;
+            margin: auto;
+        }
+
+        .col-sm-4 img{
+            height: 100%;
+            width: 100%;
+            display: block;
+            margin: auto;
+        }
+        .col-sm-4{
+            height: 384px;
+        }
+    </style>
+</head>
+
+
+<body>
+<!--导航栏部分-->
+<div th:replace="common::common_nav"></div>
+
+<div id="myCarousel" class="carousel slide">
+
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    <!-- 轮播（Carousel）项目 -->
+    <div class="carousel-inner" style="height: 330px">
+        <div class="item active">
+            <a href="https://www.saikr.com/vse/39657"><img src="/images/contest1.png" alt="First slide"></a>
+        </div>
+        <div class="item">
+            <a href="https://www.saikr.com/vse/bigdata0"><img src="/images/contest2.png" alt="Second slide"></a>
+        </div>
+        <div class="item">
+            <a href="https://www.saikr.com/apmcm/2020"><img src="/images/contest3.png" alt="Third slide"></a>
+        </div>
+    </div>
+    <!-- 轮播（Carousel）导航 -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<div class="container">
+    <h3>⭐推荐活动</h3>
+    <hr>
+    <div class="row" style="height: 384px">
+        <div class="col-sm-4">
+            <a href="#"><img src="/images/recommend1.jpg"></a>
+        </div>
+        <div class="col-sm-4">
+            <a href="#"><img src="/images/recommend2.jpg"></a>
+        </div>
+        <div class="col-sm-4">
+            <a href="#"><img src="/images/recommend3.jpg"></a>
+        </div>
+    </div>
+    <div class="row" style="height: 384px">
+        <div class="col-sm-4">
+            <a href="#"><img src="/images/contest1.png"></a>
+        </div>
+        <div class="col-sm-4">
+            <a href="#"><img src="/images/contest2.png"></a>
+        </div>
+        <div class="col-sm-4">
+            <a href="#"><img src="/images/contest3.png"></a>
+        </div>
+    </div>
+</div>
+
+<!--footer部分-->
+<div th:replace="common::common_footer"></div>
+
+
+</body>
+</html>

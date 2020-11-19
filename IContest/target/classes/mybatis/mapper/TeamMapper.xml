@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD MAPPER 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.TeamMapper">
+
+
+    <resultMap id="TeamWithCaptain" type="com.domain.Team">
+        <id property="tid" column="tid"></id>
+        <result property="teamName" column="name"></result>
+        <result property="contestType" column="type"></result>
+        <result property="teamInfo" column="info"></result>
+        <!--team的captain-->
+        <association property="captain" javaType="com.domain.IUser.User">
+            <id property="id" column="u_id"></id>
+            <result property="Nickname" column="u_nickname"></result>
+        </association>
+    </resultMap>
+
+
+    <!--查询所有 -->
+    <select id="FindAll" resultMap="TeamWithCaptain">
+        select t.*,u.id as u_id,u.nickname as u_nickname from team t
+          left outer join account u on u.id = t.captainid
+    </select>
+
+    <!--按id查询-->
+    <select id="FindById" resultMap="TeamWithCaptain" parameterType="Int">
+        select t.*,u.id as u_id,u.nickname as u_nickname from team t
+          left outer join account u on u.id = t.captainid where tid = #{id}
+    </select>
+
+    <!--按用户id查找其参与的队伍-->
+    <select id="FindByUserId" resultMap="TeamWithCaptain" parameterType="Int">
+        select t.*,u.id as u_id,u.nickname as u_nickname from team t
+          left outer join teamuser tu on tu.tid = t.tid
+          left outer join account u on u.id = t.captainid  where tu.uid = #{id}
+    </select>
+
+    <!--按类型查询-->
+    <select id="FindByType" parameterType="String" resultMap="TeamWithCaptain">
+        select t.*,u.id as u_id,u.nickname as u_nickname from team t
+          left outer join account u on u.id = t.captainid where t.type = #{type}
+    </select>
+
+    <!--按名字模糊查询-->
+    <select id="FindByName" parameterType="String" resultMap="TeamWithCaptain">
+        select t.*,u.id as u_id,u.nickname as u_nickname from team t
+          left outer join account u on u.id = t.captainid where t.name like CONCAT(CONCAT('%', #{name}), '%')
+    </select>
+
+    <!--按队长id查询-->
+    <select id="FindByCaptainId" resultMap="TeamWithCaptain">
+        select t.*,u.id as u_id,u.nickname as u_nickname from team t
+          left outer join account u on u.id = t.captainid where t.captainid = #{id}
+    </select>
+
+    <delete id="deleteTeam" parameterType="Int">
+        delete from team where tid = #{id}
+    </delete>
+
+    <insert id="saveTeam" parameterType="com.domain.Team">
+        <selectKey keyProperty="tid" order="AFTER" resultType="Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into team
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="teamName != null">
+                name,
+            </if>
+            <if test="contestType != null">
+                type,
+            </if>
+            <if test="teamInfo != null">
+                info,
+            </if>
+            <if test="captain.id != null">
+                captainid
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="teamName != null">
+                #{teamName},
+            </if>
+            <if test="contestType != null">
+                #{contestType},
+            </if>
+            <if test="teamInfo != null">
+                #{teamInfo},
+            </if>
+            <if test="captain.id != null">
+                #{captain.id}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateTeam" parameterType="com.domain.Team">
+        update team set
+        <trim prefix="" suffix="" suffixOverrides=",">
+            <if test="teamName != null">
+                 name = #{teamName},
+            </if>
+            <if test="contestType != null">
+                 type = #{contestType},
+            </if>
+            <if test="teamInfo != null">
+                info = #{teamInfo},
+            </if>
+            <if test="captain != null">
+                <if test="captain.id != null">
+                    captainid = #{captain.id}
+                </if>
+            </if>
+        </trim>
+        where tid = #{tid}
+    </update>
+
+    <insert id="addMember">
+        insert into teamuser(uid,tid)values(#{uid},#{tid})
+    </insert>
+
+    <delete id="deleteMember">
+        delete from teamuser where tid=#{tid} and uid=#{uid}
+    </delete>
+
+    <select id="FindAllMembers" parameterType="Int" resultType="com.domain.IUser.User">
+        select u.id as id,u.username as Username,u.nickname as Nickname from account u
+          left join teamuser tu on tu.uid = u.id where tu.tid =#{tid}
+    </select>
+
+
+</mapper>

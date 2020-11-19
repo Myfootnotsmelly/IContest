@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>公共部分</title>
+    <style type="text/css">
+        nav .btn {
+            margin: 7px 5px;
+            float: right;
+        }
+
+        .footer {
+            background-color: black;
+            height: 100px;
+            color: white;
+        }
+    </style>
+
+</head>
+<body>
+
+<nav th:fragment="common_nav" class="navbar navbar-default" style="margin-bottom: 0" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">IContest</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/index">首页</a></li>
+                <li><a href="/teams">所有队伍</a></li>
+                <li><a href="#">讨论区</a></li>
+            </ul>
+        </div>
+        <th:block th:if="${session.user==null}">
+            <a class="btn btn-default" th:href="@{/Login}">登陆</a>
+            <a class="btn btn-default" th:href="@{/Regist}">注册</a>
+        </th:block>
+
+        <th:block th:unless="${session.user==null}">
+            <div class="btn-group" style="float: right">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span th:text="${session.user.nickname}">template file</span> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">个人信息</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a th:href="@{'/user/'+${session.user.Id}+'/teams'}">我创建的队伍</a></li>
+                </ul>
+                <a class="btn btn-default" href="/Logout">退出</a>
+            </div>
+        </th:block>
+    </div>
+</nav>
+
+<div th:fragment="common_footer" class="container-fluid footer">
+    <div class="row text-center">
+        <h3>IContest</h3>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!--  Created by IntelliJ IDEA.-->
+<!--  User: 天气晴-->
+<!--  Date: 2020/11/11-->
+<!--  Time: 11:31-->
+<!--  To change this template use File | Settings | File Templates.-->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>IContent</title>
+    <style type="text/css">
+        nav .btn {
+            margin: 7px 5px;
+            float: right;
+        }
+        .footer {
+            background-color: black;
+            height: 100px;
+            color: white;
+        }
+        .row {
+            margin:30px 0;
+        }
+    </style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入 Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<!--导航栏-->
+<div th:replace="common::common_nav"></div>
+
+
+
+
+<div class="container">
+    <div class="row text-right"><a href="#" th:href="@{/newTeamPage}" class="btn btn-success">创建队伍</a></div>
+
+    <th:block th:if="${Jteams.size()>0}">
+        <h2>已参与的队伍</h2>
+        <div th:each="team: ${Jteams}" class="row table-bordered">
+            <div class="col-sm-12">
+                <p><h3  style="display: inline-block"  th:text=" ${team.teamName}"></h3>   <span style="display: inline-block" th:text="${team.contestType}"></span> </p>
+                <p th:text="${team.teamInfo}"></p>
+                成员:
+                <th:block th:each="user: ${team.members}">
+                    <th:block th:text="${user.nickname}+' '"></th:block>
+                </th:block>
+            </div>
+        </div>
+    </th:block>
+
+
+
+    <h5 class="page-header"></h5>
+
+    <div th:each="team: ${UJteams}" class="row table-bordered">
+        <div class="col-sm-12">
+            <p><h3  style="display: inline-block"  th:text="${team.teamName}"></h3>   <span style="display: inline-block" th:text="${team.contestType}"></span> </p>
+            <p th:text="${team.teamInfo}"></p>
+            成员:
+            <th:block th:each="user: ${team.members}">
+                <th:block th:text="${user.nickname}"></th:block>
+            </th:block>
+        </div>
+        <div class="col-sm-12 text-right">
+            <th:block th:if="${session.user}!=null">
+                <form th:action="@{'/team/'+${team.tid}+'/user/'+${session.user.id}}" method="post">
+                    <button type="submit" class="btn btn-success">加入队伍</button>
+                </form>
+            </th:block>
+<!--            <a href="#" th:href="@{/team/join(tid=${team.tid},uid=${session.user.id})}" class="btn btn-info">加入队伍</a>-->
+        </div>
+    </div>
+
+</div>
+
+<!--footer部分-->
+<div th:replace="common::common_footer"></div>
+
+</body>
+
+</html>

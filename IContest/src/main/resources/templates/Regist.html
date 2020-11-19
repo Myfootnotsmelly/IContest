@@ -1,0 +1,45 @@
+
+<!--  Created by IntelliJ IDEA.-->
+<!--  User: 天气晴-->
+<!--  Date: 2020/11/6-->
+<!--  Time: 15:13-->
+<!--  To change this template use File | Settings | File Templates.-->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>IContest</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入 Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/Regist.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        nav .btn {
+            margin: 7px 5px;
+            float: right;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div th:replace="common::common_nav"></div>
+
+<div class="login">
+    <form id="RegistForm" action="/user" method="post">
+        <div class="commonform">账 号: <input type="text" id="username" name="username" placeholder="请输入账号"></div>
+        <div class="commonform">密 码: <input type="password" id="Pswd" name="password" placeholder="请输入密码"></div>
+        <div class="commonform">密 码: <input type="password" id="RepeatPswd"  placeholder="请再次输入密码"></div>
+        <div class="commonform">昵 称: <input type="text" id="nickname" name="nickname" placeholder="请输入昵称"></div>
+        <div class="commonform"><input type="submit" name="login" value="注册" class="loginbtn"></div>
+    </form>
+</div>
+</body>
+</html>

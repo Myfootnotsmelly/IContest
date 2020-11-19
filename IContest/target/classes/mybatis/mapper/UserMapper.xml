@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD MAPPER 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.UserMapper">
+
+    <resultMap id="UserTeam" type="com.domain.IUser.User">
+        <id property="Id" column="Id"></id>
+        <result property="Username" column="username"></result>
+        <result property="Password" column="password"></result>
+        <result property="Nickname" column="nickname"></result>
+        <!--user对象中Team集合-->
+        <collection property="teamList"  ofType="com.domain.Team">
+            <id property="tid" column="tid"></id>
+            <result property="teamName" column="name"></result>
+            <result property="type" column="type"></result>
+            <result property="teamInfo" column="info"></result>
+        </collection>
+    </resultMap>
+
+    <resultMap id="TeamWithCaptain" type="com.domain.Team">
+        <id property="tid" column="tid"></id>
+        <result property="teamName" column="name"></result>
+        <result property="contestType" column="type"></result>
+        <result property="teamInfo" column="info"></result>
+        <!--team的captain-->
+        <association property="captain" javaType="com.domain.IUser.User">
+            <id property="id" column="u_id"></id>
+            <result property="Nickname" column="u_nickname"></result>
+        </association>
+    </resultMap>
+
+
+    <!--查询所有 -->
+    <select id="FindAll" resultType="com.domain.IUser.User">
+        select * from account
+    </select>
+
+    <!-- 按用户名查询（模糊搜索）  -->
+    <select id="FindByNickName" resultType="com.domain.IUser.User" parameterType="String" >
+        select * from account where Nickname like CONCAT(CONCAT('%', #{name}), '%')
+    </select>
+
+    <!--按Id查询-->
+    <select id="FindById" resultType="com.domain.IUser.User" parameterType="Int">
+        select * from account where id = #{id}
+    </select>
+
+
+    <!--按用户名与密码在数据库匹配，用于登录-->
+    <select id="FindWhenLogin" resultType="com.domain.IUser.User" parameterType="String">
+        select * from account where username = #{username} and password = #{password}
+    </select>
+
+<!--    &lt;!&ndash;根据条件查询用户&ndash;&gt;-->
+<!--    <select id="FindByCondition" resultType="com.domain.IUser.User" parameterType="com.domain.IUser.User">-->
+<!--        select * from account where 1=1-->
+<!--        <if test="Username!=null">-->
+<!--         and nickname like #{Username}-->
+<!--        </if>-->
+<!--    </select>-->
+
+    <!--查询用户名数量确保唯一性，用于注册-->
+    <select id="Count_username" resultType="Int" parameterType="String">
+        select count(username) from account where username = #{name}
+    </select>
+
+    <!--保存/增加用户-->
+    <!--在mapper接口的参数中标注@Param参数，在此处就不用著名paramType了-->
+    <insert id="saveUser">
+        <selectKey keyProperty="Id" order="AFTER" resultType="Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into account(Username,Password,Nickname)values(#{user.Username},#{user.Password},#{user.Nickname});
+    </insert>
+
+    <!--删除用户-->
+    <delete id="deleteUser" parameterType="Int">
+        delete from account where id = #{id};
+    </delete>
+
+    <!--修改/更新用户-->
+    <update id="updateUser" parameterType="com.domain.IUser.User">
+        update account set UserName=#{Username},Password=#{Password},NickName=#{Nickname} where Id=#{Id}
+    </update>
+
+    <!--查询用户所参与的队伍-->
+    <select id="FindTeams" resultMap="TeamWithCaptain" parameterType="Int">
+           select t.tid,t.name,t.type,t.info,u.nickname as u_nickname,u.id as u_id from team t
+              left join teamuser tu on tu.tid = t.tid
+               left join account u on u.Id = t.captainid where tu.uid = #{uid}
+    </select>
+
+</mapper>

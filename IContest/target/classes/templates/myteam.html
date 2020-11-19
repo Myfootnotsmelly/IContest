@@ -1,0 +1,53 @@
+
+<!--  Created by IntelliJ IDEA.-->
+<!--  User: 天气晴-->
+<!--  Date: 2020/11/12-->
+<!--  Time: 12:35-->
+<!--  To change this template use File | Settings | File Templates.-->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>IContent</title>
+    <style type="text/css">
+        nav .btn {
+            margin: 7px 5px;
+            float: right;
+        }
+        .footer {
+            background-color: black;
+            height: 100px;
+            color: white;
+        }
+
+        .row {
+            margin:30px 0;
+        }
+    </style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入 Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+</head>
+
+
+<!--导航栏模块-->
+<div th:replace="common::common_nav"></div>
+
+<div class="container">
+    <h2>我创建的队伍</h2>
+    <div th:each="team: ${myteams}" class="row table-bordered">
+        <div class="col-sm-12">
+            <h3><a href="#" th:href="@{'/team/'+${team.tid}}"><th:block th:text="${team.teamName}"></th:block></a></h3>     <p th:text="${team.contestType}" style="font-size: small"></p>
+            <p th:text="${team.teamInfo}"></p>
+        </div>
+    </div>
+
+</div>
+
+<!--footer部分-->
+<div th:replace="common::common_footer"></div>
+
+</body>
+</html>

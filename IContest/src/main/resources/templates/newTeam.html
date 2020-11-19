@@ -1,0 +1,88 @@
+
+<!--  Created by IntelliJ IDEA.-->
+<!--  User: 天气晴-->
+<!--  Date: 2020/11/11-->
+<!--  Time: 11:31-->
+<!--  To change this template use File | Settings | File Templates.-->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>IContent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style type="text/css">
+        nav .btn {
+            margin: 7px 5px;
+            float: right;
+        }
+        .footer {
+            background-color: black;
+            height: 100px;
+            color: white;
+        }
+
+        .row {
+            margin: 20px 0;
+        }
+        .fotter {
+            background-color: black;
+            height: 100px;
+            color: white;
+        }
+    </style>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+
+    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/newTeam.js"></script>
+
+
+</head>
+
+<body>
+<div th:replace="common::common_nav"></div>
+
+<div class="container">
+    <div class="row text-center"><h3>基本信息</h3></div>
+    <form class="form-horizontal text-center" role="form" action="/team" id="create" method="post">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">队伍名称</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" id="name" name="teamName"
+                       placeholder="请输入队伍名称">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">队伍类型</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" id="type" name="contestType"
+                       placeholder="请输入类型">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">队伍信息</label>
+            <div class="col-sm-7">
+                <textarea class="form-control" rows="3" id="info" name="teamInfo"></textarea>
+            </div>
+        </div>
+
+        <input type="hidden" name="captain.id" th:value="${session.user.Id}">
+
+        <div class="form-group ">
+            <div>
+                <button type="submit" class="btn btn-default">创建队伍</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--footer部分-->
+<div th:replace="common::common_footer"></div>
+
+
+</body>
+</html>
